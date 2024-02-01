@@ -13,6 +13,10 @@ export class SDKManager {
   SDKRegistered = false;
   #product: SDKAircraft | undefined;
 
+  getSDKVersion = async (): Promise<string> => {
+    return await DJISDKManagerWrapper.getSDKVersion()
+  }
+
   startConnectionToProduct = async (): Promise<void> => {
     return new Promise(async (resolve, reject) => {
       let connectTO: NodeJS.Timeout;

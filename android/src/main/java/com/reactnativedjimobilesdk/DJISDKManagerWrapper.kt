@@ -18,6 +18,14 @@ class DJISDKManagerWrapper(reactContext: ReactApplicationContext) : ReactContext
   }
 
   @ReactMethod
+  fun getSDKVersion(promise: Promise) {
+    Log.i(TAG, "Get SDK version")
+    val sdkManager = DJISDKManager.getInstance()
+    val sdkVer = sdkManager.getSDKVersion()
+    promise.resolve(sdkVer)
+  }
+
+  @ReactMethod
   fun registerApp(promise: Promise) {
     // NEED TO BE CALL FIRST BEFORE ALLLLLLLL
     // TODO Call it just after constructor
