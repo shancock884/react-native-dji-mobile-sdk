@@ -1,6 +1,7 @@
 import { NativeModules, PermissionsAndroid, Platform } from 'react-native';
 import { LINKING_ERROR } from './constant';
 import { SDKAircraft } from './SDKAircraft';
+import { SDKMission } from './SDKMission';
 import { onceProductConnected } from './utils';
 
 const { DJISDKManagerWrapper } = NativeModules;
@@ -12,10 +13,11 @@ if (!DJISDKManagerWrapper) {
 export class SDKManager {
   SDKRegistered = false;
   #product: SDKAircraft | undefined;
+  #mission: SDKMission | undefined;
 
   getSDKVersion = async (): Promise<string> => {
-    return await DJISDKManagerWrapper.getSDKVersion()
-  }
+    return await DJISDKManagerWrapper.getSDKVersion();
+  };
 
   startConnectionToProduct = async (): Promise<void> => {
     return new Promise(async (resolve, reject) => {
@@ -67,6 +69,16 @@ export class SDKManager {
       throw new Error('Product not registered');
     }
     return this.#product;
+  };
+
+  getMission = async () => {
+    if (!this.SDKRegistered) {
+      throw new Error('SDK not registered');
+    }
+    if (!this.#mission) {
+      this.#mission = new SDKMission();
+    }
+    return this.#mission;
   };
 }
 

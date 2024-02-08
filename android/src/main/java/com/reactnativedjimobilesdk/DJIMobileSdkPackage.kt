@@ -11,6 +11,7 @@ class DJIMobileSdkPackage : ReactPackage {
         return listOf(
           DJISDKManagerWrapper(reactContext),
           DJISDKAircraftWrapper(reactContext),
+          DJISDKMissionWrapper(reactContext),
           ReactEventEmitter(reactContext),
         ).toMutableList()
     }

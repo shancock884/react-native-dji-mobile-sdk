@@ -26,8 +26,16 @@ const Registration = (props: RegistrationProps) => {
     }
   };
 
+  const getSdkVersion = async () => {
+    const ver = await sdkManager.getSDKVersion();
+    Toast.show({
+      text1: 'SDK Version: ' + ver,
+    });
+  };
+
   return (
     <View>
+      <Button title="Get SDK Version" onPress={getSdkVersion} />
       <Button title="Make Registration of Drone" onPress={initDrone} />
     </View>
   );
