@@ -3,13 +3,13 @@ package com.reactnativedjimobilesdk
 import android.util.Base64
 import android.util.Log
 import com.facebook.react.bridge.*
-import dji.common.error.DJIError
+import dji.v5.common.error.IDJIError
 import dji.common.util.CommonCallbacks
 import dji.sdk.camera.Camera
 import dji.sdk.camera.VideoFeeder
 import dji.sdk.codec.DJICodecManager
 import dji.sdk.products.Aircraft
-import dji.sdk.sdkmanager.DJISDKManager
+import dji.v5.manager.SDKManager
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -20,13 +20,13 @@ class DJISDKAircraftWrapper(reactContext: ReactApplicationContext) : ReactContex
 
   companion object {
     fun getCameraInstance(): Camera? {
-      val product = DJISDKManager.getInstance().product ?: return null
+      val product = SDKManager.getInstance().product ?: return null
       return product.camera
     }
   }
 
   private fun retrieveAircraft(): Aircraft {
-    val sdkManager = DJISDKManager.getInstance()
+    val sdkManager = SDKManager.getInstance()
     val product = sdkManager.product
     if (product is Aircraft) return product
     throw Exception("The product is not an Aircraft")
@@ -62,7 +62,7 @@ class DJISDKAircraftWrapper(reactContext: ReactApplicationContext) : ReactContex
           promise.resolve(serial)
         }
 
-        override fun onFailure(error: DJIError?) {
+        override fun onFailure(error: IDJIError?) {
           promise.reject(error.toString(), error?.description)
         }
       })

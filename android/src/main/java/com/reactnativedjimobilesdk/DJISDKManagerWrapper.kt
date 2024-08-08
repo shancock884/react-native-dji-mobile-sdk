@@ -1,12 +1,13 @@
 package com.reactnativedjimobilesdk
 import android.util.Log
 import com.facebook.react.bridge.*
-import dji.common.error.DJIError
+import dji.v5.common.error.IDJIError
 import dji.common.error.DJISDKError
 import dji.sdk.base.BaseComponent
 import dji.sdk.base.BaseProduct
-import dji.sdk.sdkmanager.DJISDKInitEvent
-import dji.sdk.sdkmanager.DJISDKManager
+import dji.v5.common.register.DJISDKInitEvent
+import dji.v5.manager.SDKManager
+import dji.v5.manager.interfaces.SDKManagerCallback
 
 const val TAG = "REACT-DJI"
 
@@ -20,7 +21,7 @@ class DJISDKManagerWrapper(reactContext: ReactApplicationContext) : ReactContext
   @ReactMethod
   fun getSDKVersion(promise: Promise) {
     Log.i(TAG, "Get SDK version")
-    val sdkManager = DJISDKManager.getInstance()
+    val sdkManager = SDKManager.getInstance()
     val sdkVer = sdkManager.getSDKVersion()
     promise.resolve(sdkVer)
   }
@@ -32,10 +33,10 @@ class DJISDKManagerWrapper(reactContext: ReactApplicationContext) : ReactContext
     com.secneo.sdk.Helper.install(currentActivity?.application)
     // TODO Check if already registering an APP
     Log.d(TAG, "Register APP")
-    val sdkManager = DJISDKManager.getInstance()
+    val sdkManager = SDKManager.getInstance()
     sdkManager.registerApp(reactApplicationContext.applicationContext,
-      object : DJISDKManager.SDKManagerCallback {
-        override fun onRegister(djiError: DJIError?) {
+      object : SDKManagerCallback {
+        override fun onRegister(djiError: IDJIError?) {
           if (djiError == DJISDKError.REGISTRATION_SUCCESS) {
             Log.d(TAG, "Registration Success")
             reactEventEmitter.sendEvent(ReactEventEmitter.Event.REGISTRATION_SUCCESS, null)
@@ -82,7 +83,7 @@ class DJISDKManagerWrapper(reactContext: ReactApplicationContext) : ReactContext
   @ReactMethod
   fun startConnectionToProduct(promise: Promise) {
     Log.i(TAG, "Connect to product")
-    val sdkManager = DJISDKManager.getInstance()
+    val sdkManager = SDKManager.getInstance()
     sdkManager.startConnectionToProduct();
     promise.resolve(null)
   }
