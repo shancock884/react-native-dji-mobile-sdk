@@ -5,7 +5,7 @@ export { sdkManager } from './SDKManager';
 export { getDJISDKEventEmitter };
 
 // Components
-export { DJIVideoView } from './components/DJIVideoView';
+//export { DJIVideoView } from './components/DJIVideoView';
 
 // Types
 export type { SDKAircraft as SDKDrone } from './SDKAircraft';
