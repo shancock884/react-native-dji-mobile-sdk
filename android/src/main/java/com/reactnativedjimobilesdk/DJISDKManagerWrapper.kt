@@ -2,8 +2,8 @@ package com.reactnativedjimobilesdk
 import android.util.Log
 import com.facebook.react.bridge.*
 import dji.v5.common.error.IDJIError
-import dji.common.error.DJISDKError
-/*import dji.sdk.base.BaseComponent
+/*import dji.common.error.DJISDKError
+import dji.sdk.base.BaseComponent
 import dji.sdk.base.BaseProduct*/
 import dji.v5.common.register.DJISDKInitEvent
 import dji.v5.manager.SDKManager
@@ -45,7 +45,7 @@ class DJISDKManagerWrapper(reactContext: ReactApplicationContext) : ReactContext
 
         override fun onRegisterFailure(djiError: IDJIError) {
           Log.e(TAG, "Fail Register")
-          promise.reject(djiError.toString(), djiError?.description);
+          promise.reject(djiError.toString(), djiError?.description());
         }
 
         override fun onProductDisconnect(productId: Int) {

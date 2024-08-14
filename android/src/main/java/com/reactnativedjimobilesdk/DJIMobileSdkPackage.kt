@@ -15,9 +15,10 @@ class DJIMobileSdkPackage : ReactPackage {
         ).toMutableList()
     }
 
-    /*override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
-      return listOf(
+    override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
+      return mutableListOf()
+      /*return listOf(
         DJIVideoManager(reactContext),
-      )
-    }*/
+      )*/
+    }
 }
