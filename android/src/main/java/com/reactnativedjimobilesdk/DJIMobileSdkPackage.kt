@@ -3,7 +3,7 @@ import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.ViewManager
-import com.reactnativedjimobilesdk.djiVideo.DJIVideoManager
+//import com.reactnativedjimobilesdk.djiVideo.DJIVideoManager
 
 
 class DJIMobileSdkPackage : ReactPackage {
@@ -15,9 +15,9 @@ class DJIMobileSdkPackage : ReactPackage {
         ).toMutableList()
     }
 
-    override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
+    /*override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
       return listOf(
         DJIVideoManager(reactContext),
       )
-    }
+    }*/
 }

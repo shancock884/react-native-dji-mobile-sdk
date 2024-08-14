@@ -105,7 +105,7 @@ class DJISDKAircraftWrapper(reactContext: ReactApplicationContext) : ReactContex
       }
     } catch (e: Exception) {
       promise.reject(e.toString(), e.message)
-    }
-  }*/
+    }*/
+  }
 }
 

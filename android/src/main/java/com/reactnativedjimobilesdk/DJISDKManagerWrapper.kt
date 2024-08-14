@@ -3,8 +3,8 @@ import android.util.Log
 import com.facebook.react.bridge.*
 import dji.v5.common.error.IDJIError
 import dji.common.error.DJISDKError
-import dji.sdk.base.BaseComponent
-import dji.sdk.base.BaseProduct
+/*import dji.sdk.base.BaseComponent
+import dji.sdk.base.BaseProduct*/
 import dji.v5.common.register.DJISDKInitEvent
 import dji.v5.manager.SDKManager
 import dji.v5.manager.interfaces.SDKManagerCallback
@@ -34,40 +34,33 @@ class DJISDKManagerWrapper(reactContext: ReactApplicationContext) : ReactContext
     // TODO Check if already registering an APP
     Log.d(TAG, "Register APP")
     val sdkManager = SDKManager.getInstance()
-    sdkManager.registerApp(reactApplicationContext.applicationContext,
+    sdkManager.init(reactApplicationContext.applicationContext,
       object : SDKManagerCallback {
-        override fun onRegister(djiError: IDJIError?) {
-          if (djiError == DJISDKError.REGISTRATION_SUCCESS) {
-            Log.d(TAG, "Registration Success")
-            reactEventEmitter.sendEvent(ReactEventEmitter.Event.REGISTRATION_SUCCESS, null)
-            promise.resolve(true)
-          } else {
-            Log.e(TAG, "Fail Register")
-            promise.reject(djiError.toString(), djiError?.description);
-          }
+
+        override fun onRegisterSuccess() {
+          Log.d(TAG, "Registration Success")
+          reactEventEmitter.sendEvent(ReactEventEmitter.Event.REGISTRATION_SUCCESS, null)
+          promise.resolve(true)
         }
 
-        override fun onProductDisconnect() {
+        override fun onRegisterFailure(djiError: IDJIError) {
+          Log.e(TAG, "Fail Register")
+          promise.reject(djiError.toString(), djiError?.description);
+        }
+
+        override fun onProductDisconnect(productId: Int) {
           Log.i(TAG, "Product disconnected")
           reactEventEmitter.sendEvent(ReactEventEmitter.Event.PRODUCT_DISCONNECTED, null)
         }
 
-        override fun onProductConnect(baseProduct: BaseProduct?) {
+        override fun onProductConnect(productId: Int) {
           Log.i(TAG, "Product connected")
           reactEventEmitter.sendEvent(ReactEventEmitter.Event.PRODUCT_CONNECTED, null)
           promise.resolve("[REACT-DJI] Product Connected successfully");
         }
 
-        override fun onProductChanged(p0: BaseProduct?) {
+        override fun onProductChanged(productId: Int) {
           Log.i(TAG, "Product changed")
-        }
-
-        override fun onComponentChange(
-          componentKey: BaseProduct.ComponentKey?,
-          oldComponent: BaseComponent?,
-          newComponent: BaseComponent?
-        ) {
-          Log.i(TAG, "onComponentChange Not yet implemented")
         }
 
         override fun onInitProcess(djiSdkInitEvent: DJISDKInitEvent?, process: Int) {
@@ -82,9 +75,10 @@ class DJISDKManagerWrapper(reactContext: ReactApplicationContext) : ReactContext
 
   @ReactMethod
   fun startConnectionToProduct(promise: Promise) {
-    Log.i(TAG, "Connect to product")
+    promise.resolve("1");
+    /*Log.i(TAG, "Connect to product")
     val sdkManager = SDKManager.getInstance()
     sdkManager.startConnectionToProduct();
-    promise.resolve(null)
+    promise.resolve(null)*/
   }
 }
