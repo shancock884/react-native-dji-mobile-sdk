@@ -63,8 +63,8 @@ class DJISDKManagerWrapper(reactContext: ReactApplicationContext) : ReactContext
           Log.i(TAG, "Product changed")
         }
 
-        override fun onInitProcess(djiSdkInitEvent: DJISDKInitEvent?, process: Int) {
-          Log.i(TAG, "onInitProcess: " + djiSdkInitEvent + " " + process)
+        override fun onInitProcess(event: DJISDKInitEvent?, process: Int) {
+          Log.i(TAG, "onInitProcess: " + event + " " + process)
 
           // Don't forget to call the registerApp()
           if (event == DJISDKInitEvent.INITIALIZE_COMPLETE) {
