@@ -64,7 +64,12 @@ class DJISDKManagerWrapper(reactContext: ReactApplicationContext) : ReactContext
         }
 
         override fun onInitProcess(djiSdkInitEvent: DJISDKInitEvent?, process: Int) {
-          Log.i(TAG, "onInitProcess Not yet implemented")
+          Log.i(TAG, "onInitProcess: " + djiSdkInitEvent + " " + process)
+
+          // Don't forget to call the registerApp()
+          if (event == DJISDKInitEvent.INITIALIZE_COMPLETE) {
+              SDKManager.getInstance().registerApp()
+          }
         }
 
         override fun onDatabaseDownloadProgress(p0: Long, p1: Long) {
